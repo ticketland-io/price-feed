@@ -1273,6 +1273,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0688c2a7f92e427f44895cd63841bff7b29f8d7a1648b9e7e07a4a365b2e1257"
 
 [[package]]
+name = "dotenv"
+version = "0.15.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "77c90badedccf4105eca100756a0b1289e191f6fcbdadd3cee1d2f614f97da8f"
+
+[[package]]
 name = "ed25519"
 version = "1.5.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2527,9 +2533,11 @@ version = "0.1.0"
 dependencies = [
  "actix",
  "actix-rt",
+ "dotenv",
  "eyre",
  "reqwest",
  "ticketland-core",
+ "ticketland-utils",
  "tokio",
 ]
 
@@ -3495,6 +3503,14 @@ dependencies = [
  "tokio-retry",
  "tokio-util 0.7.4",
  "url",
+]
+
+[[package]]
+name = "ticketland-utils"
+version = "0.2.3"
+source = "git+https://github.com/ticketland-io/common-rust#505dfd8ec6bf0a34f9a181ca384c1a2d939c1f1d"
+dependencies = [
+ "lazy_static",
 ]
 
 [[package]]

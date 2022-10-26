@@ -5,6 +5,10 @@ use std::{
 use actix::prelude::*;
 use eyre::Result;
 use ticketland_core::async_helpers::with_retry;
+use ticketland_utils::logger::{
+  interface::Logger,
+  console_logger::ConsoleLogger,
+};
 use crate::{
   utils::store::Store,
   fetchers::coingecko,
@@ -50,6 +54,8 @@ impl Handler<Start> for PriceActor {
   type Result = ResponseActFuture<Self, Result<()>>;
 
   fn handle(&mut self, msg: Start, _: &mut Self::Context) -> Self::Result {
+    ConsoleLogger.info("Start fetching prices");
+
     let poll_interval = self.store.config.poll_interval;
     let redis = Arc::clone(&self.store.redis);
 
@@ -57,7 +63,10 @@ impl Handler<Start> for PriceActor {
       let price = Self::fetch_coingecko_price("solana").await?;
       let mut redis = redis.lock().await;
 
-      redis.set("price:solana", &price.to_string()).await
+      redis.set("price:solana", &price.to_string()).await?;
+      ConsoleLogger.info("Price stored");
+
+      Ok(())
     }
     .into_actor(self)
     .map(move |_: Result<()>, _, ctx| {

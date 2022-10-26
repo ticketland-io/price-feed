@@ -8,7 +8,9 @@ edition = "2021"
 [dependencies]
 actix = "0.13.0"
 actix-rt = "2.2"
-tokio = { version = "1.14.1", features = ["macros"] }
-reqwest = "0.11.12"
+dotenv = "0.15"
 eyre = "0.6.8"
 ticketland-core = { git = "https://github.com/ticketland-io/common-rust", version = "0.2.10" }
+ticketland-utils= { git = "https://github.com/ticketland-io/common-rust", version = "0.2.3" }
+tokio = { version = "1.14.1", features = ["macros"] }
+reqwest = "0.11.12"
