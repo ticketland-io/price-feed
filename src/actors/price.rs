@@ -14,6 +14,10 @@ use crate::{
   fetchers::coingecko,
 };
 
+pub fn get_price_key(token_symbol: &str) -> String {
+  format!("price:{}", token_symbol)
+}
+
 #[derive(Message)]
 #[rtype(result = "Result<()>")]
 pub struct Start;
@@ -63,7 +67,7 @@ impl Handler<Start> for PriceActor {
       let price = Self::fetch_coingecko_price("solana").await?;
       let mut redis = redis.lock().await;
 
-      redis.set("price:solana", &price.to_string()).await?;
+      redis.set(&get_price_key("solana"), &price.to_string()).await?;
       ConsoleLogger.info("Price stored");
 
       Ok(())
