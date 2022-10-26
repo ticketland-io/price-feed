@@ -11,7 +11,7 @@ use crate::{
 };
 
 #[derive(Message)]
-#[rtype(result = "()")]
+#[rtype(result = "Result<()>")]
 pub struct Start;
 
 pub struct PriceActor {
@@ -47,17 +47,22 @@ impl Actor for PriceActor {
 }
 
 impl Handler<Start> for PriceActor {
-  type Result = ResponseActFuture<Self, ()>;
+  type Result = ResponseActFuture<Self, Result<()>>;
 
   fn handle(&mut self, msg: Start, _: &mut Self::Context) -> Self::Result {
     let poll_interval = self.store.config.poll_interval;
+    let redis = Arc::clone(&self.store.redis);
 
     let fut = async move {
-      let price = Self::fetch_coingecko_price("solana").await;
+      let price = Self::fetch_coingecko_price("solana").await?;
+      let mut redis = redis.lock().await;
+
+      redis.set("price:solana", &price.to_string()).await
     }
     .into_actor(self)
-    .map(move |_, _, ctx| {
+    .map(move |_: Result<()>, _, ctx| {
       ctx.notify_later(msg, poll_interval);
+      Ok(())
     });
 
     Box::pin(fut)
