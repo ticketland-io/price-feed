@@ -61,11 +61,11 @@ impl Handler<Start> for PriceActor {
     ConsoleLogger.info("Start fetching prices");
 
     let poll_interval = self.store.config.poll_interval;
-    let redis = Arc::clone(&self.store.redis);
+    let store = Arc::clone(&self.store);
 
     let fut = async move {
       let price = Self::fetch_coingecko_price("solana").await?;
-      let mut redis = redis.lock().await;
+      let mut redis = store.redis_pool.connection().await?;
 
       redis.set(&get_price_key("solana"), &price.to_string()).await?;
       ConsoleLogger.info("Price stored");

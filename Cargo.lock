@@ -1187,6 +1187,38 @@ dependencies = [
 ]
 
 [[package]]
+name = "deadpool"
+version = "0.9.5"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "421fe0f90f2ab22016f32a9881be5134fdd71c65298917084b0c7477cbc3856e"
+dependencies = [
+ "async-trait",
+ "deadpool-runtime",
+ "num_cpus",
+ "retain_mut",
+ "tokio",
+]
+
+[[package]]
+name = "deadpool-redis"
+version = "0.11.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "2b8bde44cbfdf17ae5baa45c9f43073b320f1a19955389315629304a23909ad2"
+dependencies = [
+ "deadpool",
+ "redis 0.22.1",
+]
+
+[[package]]
+name = "deadpool-runtime"
+version = "0.1.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "eaa37046cc0f6c3cc6090fbdbf73ef0b8ef4cfcc37f6befc0020f63e8cf121e1"
+dependencies = [
+ "tokio",
+]
+
+[[package]]
 name = "derivation-path"
 version = "0.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1827,7 +1859,7 @@ dependencies = [
 [[package]]
 name = "ipfs-api-backend-hyper"
 version = "0.5.0"
-source = "git+https://github.com/ferristseng/rust-ipfs-api/#13e9823517c18bcb3e913da4e3b33dc50ffb2978"
+source = "git+https://github.com/ferristseng/rust-ipfs-api/#d2b88b2616c67c187efb98a8ac5b570dc14f6ca4"
 dependencies = [
  "async-trait",
  "bytes",
@@ -1842,7 +1874,7 @@ dependencies = [
 [[package]]
 name = "ipfs-api-prelude"
 version = "0.5.0"
-source = "git+https://github.com/ferristseng/rust-ipfs-api/#13e9823517c18bcb3e913da4e3b33dc50ffb2978"
+source = "git+https://github.com/ferristseng/rust-ipfs-api/#d2b88b2616c67c187efb98a8ac5b570dc14f6ca4"
 dependencies = [
  "async-trait",
  "bytes",
@@ -2846,6 +2878,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "retain_mut"
+version = "0.1.9"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "4389f1d5789befaf6029ebd9f7dac4af7f7e3d61b69d4f30e2ac02b57e7712b0"
+
+[[package]]
 name = "ring"
 version = "0.16.20"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3476,8 +3514,8 @@ dependencies = [
 
 [[package]]
 name = "ticketland-core"
-version = "0.2.10"
-source = "git+https://github.com/ticketland-io/common-rust#505dfd8ec6bf0a34f9a181ca384c1a2d939c1f1d"
+version = "0.2.17"
+source = "git+https://github.com/ticketland-io/common-rust#9672a2e7bc6ebe066502faa28e387f973d2742d0"
 dependencies = [
  "actix",
  "actix-multipart",
@@ -3486,6 +3524,7 @@ dependencies = [
  "bolt-client",
  "bolt-proto",
  "bytes",
+ "deadpool-redis",
  "eyre",
  "futures",
  "futures-util",
@@ -3508,7 +3547,7 @@ dependencies = [
 [[package]]
 name = "ticketland-utils"
 version = "0.2.3"
-source = "git+https://github.com/ticketland-io/common-rust#505dfd8ec6bf0a34f9a181ca384c1a2d939c1f1d"
+source = "git+https://github.com/ticketland-io/common-rust#9672a2e7bc6ebe066502faa28e387f973d2742d0"
 dependencies = [
  "lazy_static",
 ]
